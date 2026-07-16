@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["is_supported_resume_ext","list_supported_files","parse_resume_file"],"mod":["doc","docx","pdf","url"]};

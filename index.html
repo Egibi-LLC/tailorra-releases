@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tailorra</title>
+  <meta name="description" content="tailorra is a Windows desktop app that tailors your resume to each job listing.">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #ffffff;
+      --fg: #1c1c1e;
+      --muted: #5f6368;
+      --border: #d9d9de;
+      --card-bg: #fafafa;
+      --note-bg: #f4f4f6;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-fg: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16181d;
+        --fg: #e8e8ea;
+        --muted: #9a9fa8;
+        --border: #34383f;
+        --card-bg: #1d2026;
+        --note-bg: #1d2026;
+        --accent: #3b82f6;
+        --accent-hover: #2f6fe0;
+        --accent-fg: #ffffff;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font: 16px/1.6 system-ui, "Segoe UI", -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 3rem;
+    }
+    a { color: var(--accent); }
+    h1 { font-size: 2rem; margin: 0 0 0.25rem; }
+    h2 { font-size: 1.15rem; margin: 2.5rem 0 0.75rem; }
+    p.tagline { font-size: 1.1rem; color: var(--muted); margin: 0 0 0.75rem; }
+    p.lede { margin: 0; }
+    .download { margin-top: 2rem; }
+    a.btn {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--accent-fg);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.7rem 1.5rem;
+      border-radius: 0.5rem;
+    }
+    a.btn:hover { background: var(--accent-hover); }
+    p.download-meta { margin: 0.6rem 0 0; font-size: 0.9rem; color: var(--muted); }
+    .note {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: var(--note-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+    }
+    ul.links { list-style: none; padding: 0; margin: 0; }
+    ul.links li { margin: 0.75rem 0; }
+    a.card {
+      display: block;
+      padding: 0.9rem 1.1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.6rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    a.card:hover { border-color: var(--accent); }
+    a.card strong { display: block; font-size: 1rem; }
+    a.card span { color: var(--muted); font-size: 0.9rem; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>tailorra</h1>
+    <p class="tagline">A Windows desktop app that tailors your resume to each job listing.</p>
+    <p class="lede">You keep one master copy of your work history. For each listing, tailorra drafts a targeted resume and cover letter with AI suggestions you review before anything changes, then exports to PDF, DOCX, HTML, Markdown, or plain text.</p>
+  </header>
+
+  <section class="download">
+    <a class="btn" href="https://github.com/Egibi-LLC/tailorra-releases/releases/latest/download/tailorra-x64-setup.exe">Download for Windows</a>
+    <p class="download-meta">Latest version, 64-bit installer for Windows 10 and 11. Or browse <a href="https://github.com/Egibi-LLC/tailorra-releases/releases">all releases</a>.</p>
+    <p class="download-meta">Linux (beta): <a href="https://github.com/Egibi-LLC/tailorra-releases/releases/latest/download/tailorra-amd64.AppImage">AppImage</a> or <a href="https://github.com/Egibi-LLC/tailorra-releases/releases/latest/download/tailorra-amd64.deb">deb</a>, x86-64. The AppImage auto-updates; the deb does not.</p>
+    <p class="note"><strong>SmartScreen warning:</strong> the installer is not yet signed with an Authenticode certificate, so Windows shows "Windows protected your PC" when you run it. Click <em>More info</em>, then <em>Run anyway</em>. Releases are minisign-signed and the app verifies the signature on every update it installs. Every release also ships a PGP-signed checksum manifest; see <a href="VERIFY.md">Verify your download</a>.</p>
+  </section>
+
+  <section>
+    <h2>Documentation</h2>
+    <ul class="links">
+      <li><a class="card" href="USER_GUIDE.md"><strong>User guide</strong><span>Installing, connecting an AI provider, and everyday use. Served as plain markdown.</span></a></li>
+      <li><a class="card" href="VERIFY.md"><strong>Verify your download</strong><span>Checksums, PGP and minisign signatures, and the SmartScreen warning explained.</span></a></li>
+      <li><a class="card" href="api/ts/"><strong>Frontend API (TypeDoc)</strong><span>Angular services, components, and models</span></a></li>
+      <li><a class="card" href="api/rust/"><strong>Backend API (rustdoc)</strong><span>Tauri commands and the Rust core</span></a></li>
+      <li><a class="card" href="adr/README.md"><strong>Architecture decision records</strong><span>Design decisions with context and consequences. Served as plain markdown.</span></a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>The tailorra source repository is private. This site hosts the releases and the documentation generated from it on each push to main.</p>
+  </footer>
+</body>
+</html>

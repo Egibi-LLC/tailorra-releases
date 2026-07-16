@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["open_browser_for_extension_setup"],"struct":["ExtensionsTarget"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["extract_style_xml","extract_text"]};

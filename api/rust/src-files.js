@@ -1,0 +1,2 @@
+createSrcSidebar('[["tailorra",["",[],["main.rs"]]],["tailorra_lib",["",[["ai",[],["anthropic.rs","cancel.rs","claude_cli.rs","css_sanitize.rs","mod.rs"]],["parse",[],["doc.rs","docx.rs","mod.rs","pdf.rs","url.rs"]]],["browser.rs","capture.rs","import.rs","keys.rs","lib.rs","license.rs","pdf.rs"]]]]');
+//{"start":19,"fragment_lengths":[32,248]}

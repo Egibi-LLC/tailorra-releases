@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["verify"],"mod":["store"],"struct":["LicensePayload"]};

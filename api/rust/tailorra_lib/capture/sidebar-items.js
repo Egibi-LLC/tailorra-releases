@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["CAPTURED_EVENT","DEFAULT_CAPTURE_PORT"],"enum":["ServerHealth"],"fn":["resolve_port","spawn_server"],"mod":["token"],"struct":["AutofillPackage","AutofillProfile","CaptureBridge","CapturePayload","CaptureServerState","CapturedEvent"]};

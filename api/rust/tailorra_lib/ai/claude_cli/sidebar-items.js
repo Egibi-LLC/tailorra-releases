@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["check_auth","extract_master","generate_cover_letter","generate_field","generate_personal_summary","generate_resume_style","polish_resume_html","refine_text","suggest_resume_items","test_connection","tweak_resume_style"],"struct":["CliCallEndEvent","CliCallStartEvent","CliOptions"]};

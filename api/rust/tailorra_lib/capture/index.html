@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Local HTTP server that the browser extension talks to."><title>tailorra_lib::capture - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tailorra_lib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.1 (8bab26f4f 2026-07-14)" data-channel="1.97.1" data-search-js="search-fd9372ac.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-fcd733ba.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module capture</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../tailorra_lib/index.html">tailorra_<wbr>lib</a><span class="version">0.1.18</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module capture</a></h2><h3><a href="#modules">Module Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#constants" title="Constants">Constants</a></li><li><a href="#functions" title="Functions">Functions</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="../index.html">In crate tailorra_<wbr>lib</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">tailorra_lib</a></div><h1>Module <span>capture</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/tailorra_lib/capture.rs.html#1-626">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Local HTTP server that the browser extension talks to.</p>
+<p>Binds <code>127.0.0.1:CAPTURE_PORT</code> and exposes authenticated endpoints
+in two directions:</p>
+<ul>
+<li>
+<p><code>POST /capture</code> (extension → app): takes a JSON payload from the
+extension (URL, page title, raw HTML, optional source-site
+identifier). The handler prefers the extension’s pre-extracted
+text, falling back to converting the HTML via <code>html2text</code>, then
+either emits a Tauri <code>listing-captured</code> event with the result or,
+while no webview listener is registered yet, buffers it in the
+CaptureBridge until the frontend drains it. The frontend’s
+CaptureService listens for that event, inserts a job_listings row
+through the SQL plugin, and surfaces a toast; AI extraction is not
+triggered automatically, the user runs it later from the listing.</p>
+</li>
+<li>
+<p><code>GET /autofill/package</code> + <code>GET /autofill/package/files</code>
+(app → extension): serve the application package the user last
+prepared from a tailored version (contact profile plus the resume
+rendered to PDF/DOCX), so the extension can fill an employer’s
+application form. The renderer owns the data and the render
+pipeline, so the package is pushed here via the
+<code>set_autofill_package</code> command and held in memory only; nothing
+is persisted and a fresh app start has no package until the user
+prepares one again.</p>
+</li>
+</ul>
+<p>Auth: <code>Authorization: Bearer &lt;token&gt;</code> against a token stored in the
+OS keychain. Generated on demand from the Browser Capture settings
+page; kept in memory in the AppState so each request doesn’t pay a
+keychain round-trip.</p>
+<p>CORS: wildcard allow-origin/methods/headers via <code>CorsLayer::new()</code>
+because browser extensions run from <code>chrome-extension://</code> /
+<code>moz-extension://</code> origins which we can’t fully enumerate. The
+bearer token is the actual gate; anyone on localhost would still
+need the token to capture.</p>
+</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="token/index.html" title="mod tailorra_lib::capture::token">token</a></dt><dd>Token storage helpers — wrapping <code>keyring</code> so callers don’t have to
+know the service/account names.</dd></dl><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.AutofillPackage.html" title="struct tailorra_lib::capture::AutofillPackage">Autofill<wbr>Package</a></dt><dd>The application package the user prepared from a tailored version:
+contact profile plus the resume rendered to bytes. Held in memory
+only (see module docs). <code>prepared_at_ms</code> is stamped server-side
+when the package is set.</dd><dt><a class="struct" href="struct.AutofillProfile.html" title="struct tailorra_lib::capture::AutofillProfile">Autofill<wbr>Profile</a></dt><dd>Contact fields the extension maps onto an employer form. Field
+names are what the renderer sends (camelCase over IPC); everything
+defaults to empty so a sparse personal_info row still produces a
+usable package.</dd><dt><a class="struct" href="struct.CaptureBridge.html" title="struct tailorra_lib::capture::CaptureBridge">Capture<wbr>Bridge</a></dt><dd>Hand-off between the HTTP handler and the webview. Tauri events are
+fire-and-forget: with no registered listener (app still booting,
+webview reloading) an emit “succeeds” and the capture evaporates,
+while the extension is told everything went fine. The handler
+consults this bridge instead: not ready means buffer, ready means
+emit. The frontend flips <code>listener_ready</code> by invoking
+<code>drain_pending_captures</code> after registering its listener; a page
+load in the main webview flips it back (see on_page_load in lib.rs).</dd><dt><a class="struct" href="struct.CapturePayload.html" title="struct tailorra_lib::capture::CapturePayload">Capture<wbr>Payload</a></dt><dd>JSON payload from the browser extension.</dd><dt><a class="struct" href="struct.CaptureServerState.html" title="struct tailorra_lib::capture::CaptureServerState">Capture<wbr>Server<wbr>State</a></dt><dd>Shared server state. The token is stored behind an RwLock so
+regeneration via the settings UI takes effect on the next request
+without restarting the server.</dd><dt><a class="struct" href="struct.CapturedEvent.html" title="struct tailorra_lib::capture::CapturedEvent">Captured<wbr>Event</a></dt><dd>Event payload emitted to the frontend on a successful capture.
+Mirrors CapturePayload but with normalized text.</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.ServerHealth.html" title="enum tailorra_lib::capture::ServerHealth">Server<wbr>Health</a></dt><dd>Lifecycle of the background capture server, readable by the
+<code>get_capture_status</code> command so the settings UI can tell the user
+when the server never actually came up (port already in use, etc.)
+instead of silently looking healthy.</dd></dl><h2 id="constants" class="section-header">Constants<a href="#constants" class="anchor">§</a></h2><dl class="item-table"><dt><a class="constant" href="constant.CAPTURED_EVENT.html" title="constant tailorra_lib::capture::CAPTURED_EVENT">CAPTURED_<wbr>EVENT</a></dt><dd>Tauri event name fired on each successful capture.</dd><dt><a class="constant" href="constant.DEFAULT_CAPTURE_PORT.html" title="constant tailorra_lib::capture::DEFAULT_CAPTURE_PORT">DEFAULT_<wbr>CAPTURE_<wbr>PORT</a></dt><dd>Default port the capture server binds to. Picked from the user
+range (1024-49151), unlikely-to-collide. Configurable via env
+<code>TAILORRA_CAPTURE_PORT</code> for users who already use 7341
+(the pre-rename <code>TAILOR_CAPTURE_PORT</code> is still honored).</dd></dl><h2 id="functions" class="section-header">Functions<a href="#functions" class="anchor">§</a></h2><dl class="item-table"><dt><a class="fn" href="fn.resolve_port.html" title="fn tailorra_lib::capture::resolve_port">resolve_<wbr>port</a></dt><dd>Resolve the port to bind from the env, falling back to the default.</dd><dt><a class="fn" href="fn.spawn_server.html" title="fn tailorra_lib::capture::spawn_server">spawn_<wbr>server</a></dt><dd>Spawn the capture server on the Tauri-managed async runtime.
+Returns immediately; failures (port in use, etc.) are logged via
+tracing-style eprintln so the app doesn’t crash if capture can’t
+start. The settings UI can probe the port with a GET on /healthz
+to surface server health.</dd></dl></section></div></main></body></html>

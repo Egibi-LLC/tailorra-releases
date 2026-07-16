@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Anthropic Messages API client."><title>tailorra_lib::ai::anthropic - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tailorra_lib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.1 (8bab26f4f 2026-07-14)" data-channel="1.97.1" data-search-js="search-fd9372ac.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-fcd733ba.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module anthropic</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../tailorra_lib/index.html">tailorra_<wbr>lib</a><span class="version">0.1.18</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module anthropic</a></h2><h3><a href="#functions">Module Items</a></h3><ul class="block"><li><a href="#functions" title="Functions">Functions</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In tailorra_<wbr>lib::<wbr>ai</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">tailorra_lib</a>::<wbr><a href="../index.html">ai</a></div><h1>Module <span>anthropic</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/tailorra_lib/ai/anthropic.rs.html#1-1625">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Anthropic Messages API client.</p>
+<p>Two operations land here:</p>
+<ul>
+<li><code>test_connection</code>: a trivial round-trip used to verify a stored key.</li>
+<li><code>extract_master</code>: structured extraction of resume items using Claude’s
+Tool Use feature for guaranteed-shape JSON output.</li>
+</ul>
+</div></details><h2 id="functions" class="section-header">Functions<a href="#functions" class="anchor">§</a></h2><dl class="item-table"><dt><a class="fn" href="fn.build_generate_cover_letter_user_message.html" title="fn tailorra_lib::ai::anthropic::build_generate_cover_letter_user_message">build_<wbr>generate_<wbr>cover_<wbr>letter_<wbr>user_<wbr>message</a></dt><dd>User-message payload for cover letter generation. Public so
+claude_cli can route through the same shape.</dd><dt><a class="fn" href="fn.build_generate_field_user_message.html" title="fn tailorra_lib::ai::anthropic::build_generate_field_user_message">build_<wbr>generate_<wbr>field_<wbr>user_<wbr>message</a></dt><dd>User-message payload for per-item field generation. Public so
+claude_cli can route through the same shape.</dd><dt><a class="fn" href="fn.build_generate_summary_user_message.html" title="fn tailorra_lib::ai::anthropic::build_generate_summary_user_message">build_<wbr>generate_<wbr>summary_<wbr>user_<wbr>message</a></dt><dd>User-message payload for personal-summary generation. Public so
+claude_cli can route through the same shape.</dd><dt><a class="fn" href="fn.build_refine_user_message.html" title="fn tailorra_lib::ai::anthropic::build_refine_user_message">build_<wbr>refine_<wbr>user_<wbr>message</a></dt><dd>Build the user-message payload shared across providers for refine
+calls. Public so claude_cli can use the same shape.</dd><dt><a class="fn" href="fn.extract_master.html" title="fn tailorra_lib::ai::anthropic::extract_master">extract_<wbr>master</a></dt><dd>Extract structured master-corpus items from resume text. Returns the raw
+JSON value the model produced (already validated as conforming to the
+requested schema by Anthropic’s tool-use mechanism).</dd><dt><a class="fn" href="fn.generate_cover_letter.html" title="fn tailorra_lib::ai::anthropic::generate_cover_letter">generate_<wbr>cover_<wbr>letter</a></dt><dd>Compose a fresh cover letter for a tailored version. The model
+receives the master corpus (so it can ground claims in the
+candidate’s actual background) and the listing text (so it can
+match the language and call out the right experience). Optional
+<code>intent</code> lets the user nudge tone or angle (“emphasize culture
+fit”, “shorter”, “more formal”).</dd><dt><a class="fn" href="fn.generate_cover_letter_system_prompt.html" title="fn tailorra_lib::ai::anthropic::generate_cover_letter_system_prompt">generate_<wbr>cover_<wbr>letter_<wbr>system_<wbr>prompt</a></dt><dd>System prompt for cover letter generation. Public so claude_cli
+can use the same prompt.</dd><dt><a class="fn" href="fn.generate_field.html" title="fn tailorra_lib::ai::anthropic::generate_field">generate_<wbr>field</a></dt><dd>Compose a fresh per-item field (experience summary, education
+notes, etc.) FROM SCRATCH given only the structured context the
+caller supplies. Distinct from <code>refine_text</code>, which polishes text
+the user already wrote, and from <code>generate_personal_summary</code>, which
+pulls the whole corpus. Per-kind system prompts bake in honesty
+constraints — the model writes only what the context supports.</dd><dt><a class="fn" href="fn.generate_personal_summary.html" title="fn tailorra_lib::ai::anthropic::generate_personal_summary">generate_<wbr>personal_<wbr>summary</a></dt><dd>Compose a fresh personal-summary headline from the user’s master
+corpus rather than refining existing text. The model receives a JSON
+snapshot of every relevant section (experiences, education, skills,
+projects, certifications) plus optional user-direction; honesty
+constraints from the generate-prompt forbid invention.</dd><dt><a class="fn" href="fn.generate_personal_summary_system_prompt.html" title="fn tailorra_lib::ai::anthropic::generate_personal_summary_system_prompt">generate_<wbr>personal_<wbr>summary_<wbr>system_<wbr>prompt</a></dt><dd>System prompt for the from-scratch personal-summary generator.
+Public so claude_cli can route through the same prompt.</dd><dt><a class="fn" href="fn.generate_resume_style.html" title="fn tailorra_lib::ai::anthropic::generate_resume_style">generate_<wbr>resume_<wbr>style</a></dt><dd>Generate a CSS override block that styles the resume according to the
+user’s description. Returns CSS code only (no markdown fences). The CSS
+will be appended to the default Classic template’s CSS.</dd><dt><a class="fn" href="fn.generate_resume_style_from_attachment.html" title="fn tailorra_lib::ai::anthropic::generate_resume_style_from_attachment">generate_<wbr>resume_<wbr>style_<wbr>from_<wbr>attachment</a></dt><dd>Generate a CSS override that mimics the visual style of an example resume
+the user uploaded. <code>media_type</code> is the file’s MIME type — supported values
+are <code>image/png</code>, <code>image/jpeg</code>, <code>image/gif</code>, <code>image/webp</code>, and
+<code>application/pdf</code>. PDFs use Anthropic’s <code>document</code> content block; images
+use the <code>image</code> block. <code>additional_notes</code> is appended to the prompt so
+users can call out specific aspects to keep or change.</dd><dt><a class="fn" href="fn.polish_resume_html.html" title="fn tailorra_lib::ai::anthropic::polish_resume_html">polish_<wbr>resume_<wbr>html</a></dt><dd>Run a rendered resume HTML document through the model for a polish pass:
+tightening bullets, normalizing dates, and refining the embedded CSS.
+Returns a cleaned HTML document with the same overall structure as input.
+<code>user_prompt</code> is appended to the polish instructions when non-empty so
+callers can ask for specific tweaks (“tighten bullets”, “more whitespace”,
+“use a serif typeface”, etc.).</dd><dt><a class="fn" href="fn.refine_text.html" title="fn tailorra_lib::ai::anthropic::refine_text">refine_<wbr>text</a></dt><dd>Refine a single short field on the master corpus — an experience
+summary, an individual bullet, an education notes line, etc. The
+caller supplies the kind (which selects the system prompt with its
+honesty / scope constraints), the raw text, an optional structured
+context (employer, title, GPA, etc.), and an optional user
+direction (“emphasize leadership”). Returns the refined text only,
+no markdown / preamble / quotes.</dd><dt><a class="fn" href="fn.suggest_resume_items.html" title="fn tailorra_lib::ai::anthropic::suggest_resume_items">suggest_<wbr>resume_<wbr>items</a></dt><dd>Given a job listing and the user’s master resume corpus, ask the model
+to select which corpus items should appear in the tailored resume.
+Returns the raw JSON the model produced via tool-use — arrays of master
+IDs grouped by kind, plus a short rationale. The frontend takes those
+IDs and toggles <code>version_items</code> in bulk.</dd><dt><a class="fn" href="fn.system_prompt_for_generate_kind.html" title="fn tailorra_lib::ai::anthropic::system_prompt_for_generate_kind">system_<wbr>prompt_<wbr>for_<wbr>generate_<wbr>kind</a></dt><dd>Map the generate-kind discriminator to its system prompt. Public
+so claude_cli can route through the same prompts. Distinct from
+<code>system_prompt_for_kind</code> which serves the refine flow — generate
+prompts are more explicit about composing from scratch and respect
+only-what-the-context-supports rules harder, since there’s no raw
+text to anchor against.</dd><dt><a class="fn" href="fn.system_prompt_for_kind.html" title="fn tailorra_lib::ai::anthropic::system_prompt_for_kind">system_<wbr>prompt_<wbr>for_<wbr>kind</a></dt><dd>Map the kind discriminator to its system prompt. Public so
+claude_cli can route through the same prompts.</dd><dt><a class="fn" href="fn.test_connection.html" title="fn tailorra_lib::ai::anthropic::test_connection">test_<wbr>connection</a></dt><dt><a class="fn" href="fn.tweak_resume_style.html" title="fn tailorra_lib::ai::anthropic::tweak_resume_style">tweak_<wbr>resume_<wbr>style</a></dt><dd>Refine an existing CSS override block in-place. The model gets the
+current CSS plus a short instruction and returns the FULL updated CSS
+with the requested change applied surgically — keeping what works,
+modifying only what was asked. Used by the in-editor “Refine this
+style” loop after the user has applied a variant or generated a base
+they want to evolve.</dd></dl></section></div></main></body></html>
